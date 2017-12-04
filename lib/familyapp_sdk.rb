@@ -21,3 +21,6 @@ end
 
 require 'familyapp_sdk/engine'
 require 'familyapp_sdk/client'
+require 'familyapp_sdk/message'
+
+require 'familyapp_sdk/components/quick_reply'
