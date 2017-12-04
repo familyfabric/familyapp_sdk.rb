@@ -20,6 +20,21 @@ Or install it yourself as:
 
     $ gem install familyapp_sdk
 
+## Configuration
+
+### Initializer
+
+Create `familyapp_sdk.rb` initializer in you app directory and paste:
+
+```ruby
+# YOUR_APP/config/initializers/familyapp_sdk.rb
+FamilyappSdk.configure do |config|
+  config.verify_token      = '<VERIFY_TOKEN>'
+  config.access_token = '<ACCESS_TOKEN>'
+  config.api_host = '<API_HOST>' # Optional field for staging env
+end
+```
+
 ## Usage
 
 TODO: Write usage instructions here
@@ -32,7 +47,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/familyapp_sdk.
+Bug reports and pull requests are welcome on GitHub at https://github.com/familyfabric/familyapp_sdk.rb.
 
 ## License
 
