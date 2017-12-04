@@ -15,8 +15,9 @@ module FamilyappSdk
       url = "/bot_api/v1/families/#{family_id}/conversations/#{conversation_id}/messages"
       RestClient.post(
         FamilyappSdk.config.api_host + url,
-        data,
-        { Authorization: FamilyappSdk.config.access_token }
+        data.build.to_json,
+        { Authorization: FamilyappSdk.config.access_token,
+          content_type: :json }
       ) { |response, request, result| response }
     end
   end
