@@ -2,6 +2,14 @@ require 'rest-client'
 
 module FamilyappSdk
   class Client
+    def self.get_family(family_id)
+      url = "/bot_api/v1/families/#{family_id}"
+      RestClient.get(
+        FamilyappSdk.config.api_host + url,
+        { Authorization: FamilyappSdk.config.access_token }
+      ) { |response, request, result| response }
+    end
+
     def self.update_profile(family_id, family_user_id, data)
       url = "/bot_api/v1/families/#{family_id}/family_users/#{family_user_id}"
       RestClient.patch(
