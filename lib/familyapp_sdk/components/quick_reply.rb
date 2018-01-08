@@ -3,10 +3,11 @@ module FamilyappSdk
     class QuickReply
       attr_accessor :title, :payload, :image
 
-      def initialize(title:, payload: nil, image: nil)
+      def initialize(title:, payload: nil, image: nil, color: nil)
         @title = title
         @payload = payload
         @image = image
+        @color = color
       end
 
       def build
