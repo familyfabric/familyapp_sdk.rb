@@ -23,4 +23,7 @@ require 'familyapp_sdk/engine'
 require 'familyapp_sdk/client'
 require 'familyapp_sdk/message'
 
+require 'familyapp_sdk/components/button'
+require 'familyapp_sdk/components/element'
 require 'familyapp_sdk/components/quick_reply'
+require 'familyapp_sdk/components/template'

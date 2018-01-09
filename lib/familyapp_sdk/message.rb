@@ -6,7 +6,7 @@ module FamilyappSdk
       @content = content
       @image = image
       @video = video
-      @template = template
+      @template_attributes = template.build
       @quick_replies_attributes = build_quick_replies(quick_replies)
     end
 
