@@ -1,6 +1,6 @@
 module FamilyappSdk
   module Components
-    class Templates
+    class Template
       attr_accessor :template_type, :elements_attributes, :buttons_attributes
 
       def initialize(type:, elements: nil, buttons: nil)
