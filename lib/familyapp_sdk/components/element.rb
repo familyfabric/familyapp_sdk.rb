@@ -9,7 +9,7 @@ module FamilyappSdk
         @image = image
         @url = url
         @payload = payload
-        @buttons = build_attributes(buttons)
+        @buttons_attributes = build_attributes(buttons)
       end
 
       def build
