@@ -19,6 +19,15 @@ module FamilyappSdk
       ) { |response, request, result| response }
     end
 
+    def self.update_bot(data)
+      url = "/bot_api/v1/bot"
+      RestClient.patch(
+        FamilyappSdk.config.api_host + url,
+        data,
+        { Authorization: FamilyappSdk.config.access_token }
+      ) { |response, request, result| response }
+    end
+
     def self.send(family_id, conversation_id, data)
       url = "/bot_api/v1/families/#{family_id}/conversations/#{conversation_id}/messages"
       RestClient.post(
