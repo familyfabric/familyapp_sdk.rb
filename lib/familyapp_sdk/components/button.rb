@@ -7,7 +7,7 @@ module FamilyappSdk
         @button_type  = type
         @title = title
         @payload = payload
-        @web_url = web_url
+        @url = web_url
       end
 
       def build
