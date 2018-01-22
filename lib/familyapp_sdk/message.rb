@@ -6,7 +6,7 @@ module FamilyappSdk
       @content = content
       @image = image
       @video = video
-      @template_attributes = template.build if template.present?
+      @template = template.build.to_json if template.present?
       @quick_replies_attributes = build_quick_replies(quick_replies)
     end
 

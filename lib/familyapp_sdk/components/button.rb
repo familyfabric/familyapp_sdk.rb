@@ -1,13 +1,13 @@
 module FamilyappSdk
   module Components
     class Button
-      attr_accessor :web_url, :payload, :title, :type
+      attr_accessor :url, :payload, :title, :type
 
-      def initialize(type:, title:, payload: nil, web_url: nil)
-        @button_type  = type
+      def initialize(type:, title:, payload: nil, url: nil)
+        @button_type = type
         @title = title
         @payload = payload
-        @url = web_url
+        @url = url
       end
 
       def build

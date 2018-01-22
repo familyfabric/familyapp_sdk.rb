@@ -1,12 +1,12 @@
 module FamilyappSdk
   module Components
     class Template
-      attr_accessor :template_type, :elements_attributes, :buttons_attributes
+      attr_accessor :template_type, :elements, :buttons
 
       def initialize(type:, elements: nil, buttons: nil)
         @template_type = type
-        @elements_attributes      = build_attributes(elements)
-        @buttons_attributes       = build_attributes(buttons)
+        @elements = build_attributes(elements)
+        @buttons = build_attributes(buttons)
       end
 
       def build
