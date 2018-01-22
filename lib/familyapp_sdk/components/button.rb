@@ -4,7 +4,7 @@ module FamilyappSdk
       attr_accessor :url, :payload, :title, :type
 
       def initialize(type:, title:, payload: nil, url: nil)
-        @type = type
+        @button_type = type
         @title = title
         @payload = payload
         @url = url
