@@ -13,9 +13,7 @@ module FamilyappSdk
           save_to_file(key)
         else
           cipher = OpenSSL::Cipher::AES256.new(:CBC)
-          password = Digest::SHA256.hexdigest(SecureRandom.uuid)
-          save_to_file(key, cipher, password)
-          FamilyappSdk.config.rsa_key_password = password
+          save_to_file(key, cipher, FamilyappSdk.config.rsa_key_password)
         end
       end
       key
