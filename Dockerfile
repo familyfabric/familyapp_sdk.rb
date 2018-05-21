@@ -1,4 +1,4 @@
-FROM ruby:2.4.1
+FROM ruby:2.4.4
 MAINTAINER lukasz.horonziak@stermedia.eu
 
 # Install necesary dependecies

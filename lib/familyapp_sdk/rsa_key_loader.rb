@@ -22,7 +22,7 @@ module FamilyappSdk
 
   private
 
-  def save_to_file(key, cipher, password)
+  def save_to_file(key, cipher = nil, password = nil)
     begin
       file = File.open(FamilyappSdk.config.rsa_key_path, 'w')
       cipher && password ? file.write(key.to_pem(cipher, password)) : file.write(key.to_pem)
