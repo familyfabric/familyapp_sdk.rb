@@ -22,7 +22,7 @@ module FamilyappSdk
     end
 
     def update_remote_key
-      Client.update_bot({rsa_key_attributes: {key: @rsa_key.public_key}})
+      Client.update_bot({rsa_key: {key: @rsa_key.public_key}})
     end
   end
 end
