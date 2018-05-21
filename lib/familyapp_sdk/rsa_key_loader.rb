@@ -1,20 +1,13 @@
 module FamilyappSdk
   class RsaKeyLoader
     def load
+      raise StandardError, 'RSA KEY PASSWORD MUST BE PROViDED' if FamilyappSdk.config.rsa_key_password.nil?
       if File.exist?(FamilyappSdk.config.rsa_key_path)
-        if FamilyappSdk.config.rsa_key_password.nil?
-          key = OpenSSL::PKey::RSA.new File.read(FamilyappSdk.config.rsa_key_path)
-        else
-          key = OpenSSL::PKey::RSA.new File.read(FamilyappSdk.config.rsa_key_path), FamilyappSdk.config.rsa_key_password
-        end
+        key = OpenSSL::PKey::RSA.new File.read(FamilyappSdk.config.rsa_key_path), FamilyappSdk.config.rsa_key_password
       else
         key = OpenSSL::PKey::RSA.new(2048)
-        if FamilyappSdk.config.rsa_key_password.nil?
-          save_to_file(key)
-        else
-          cipher = OpenSSL::Cipher::AES256.new(:CBC)
-          save_to_file(key, cipher, FamilyappSdk.config.rsa_key_password)
-        end
+        cipher = OpenSSL::Cipher::AES256.new(:CBC)
+        save_to_file(key, cipher, FamilyappSdk.config.rsa_key_password)
       end
       key
     end
