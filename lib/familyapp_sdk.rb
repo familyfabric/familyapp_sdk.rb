@@ -3,13 +3,10 @@ require 'familyapp_sdk/configuration'
 
 module FamilyappSdk
   class << self
-    attr_accessor :config
-
-    def config
-      @config ||= Configuration.new
-    end
+    attr_accessor :config, :rsa_key
 
     def configure
+      @config ||= Configuration.new
       yield(config)
     end
 
@@ -18,6 +15,8 @@ module FamilyappSdk
     end
   end
 end
+
+require 'familyapp_sdk/rsa_key_loader'
 
 require 'familyapp_sdk/engine'
 require 'familyapp_sdk/client'
