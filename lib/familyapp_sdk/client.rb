@@ -28,6 +28,15 @@ module FamilyappSdk
       ) { |response, request, result| response }
     end
 
+    def self.update_rsa_key(data)
+      url = "/bot_api/v1/rsa_keys"
+      RestClient.post(
+          FamilyappSdk.config.api_host + url,
+          data,
+          { Authorization: FamilyappSdk.config.access_token }
+      ) { |response, request, result| response }
+    end
+
     def self.send(family_id, conversation_id, data)
       url = "/bot_api/v1/families/#{family_id}/conversations/#{conversation_id}/messages"
       RestClient.post(
