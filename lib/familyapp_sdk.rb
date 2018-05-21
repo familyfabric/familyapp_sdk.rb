@@ -1,5 +1,6 @@
 require 'familyapp_sdk/version'
 require 'familyapp_sdk/configuration'
+require 'familyapp_sdk/rsa_key_loader'
 
 module FamilyappSdk
   class << self
@@ -16,25 +17,7 @@ module FamilyappSdk
     end
     
     def load_rsa_key
-      if File.exist?(@config.rsa_key_path)
-        if @config.rsa_key_password.nil?
-          key = OpenSSL::PKey::RSA.new File.read(@config.rsa_key_path)
-        else
-          key = OpenSSL::PKey::RSA.new File.read(@config.rsa_key_path), @config.rsa_key_password
-        end
-      else
-        key = OpenSSL::PKey::RSA.new(2048)
-        if @config.rsa_key_password.nil?
-          file = File.open(@config.rsa_key_path, 'w') {|file| file.write key.to_pem}
-        else
-          cipher = OpenSSL::Cipher::AES256.new(:CBC)
-          password = Digest::SHA256.hexdigest SecureRandom.uuid
-          file = File.open(@config.rsa_key_path, 'w') {|file| file.write key.to_pem(cipher,password)}
-          @config.rsa_key_password = password
-        end
-        file.close
-      end
-      @rsa_key = key
+      @rsa_key = RsaKeyLoader.new.load
     end
   end
 end
