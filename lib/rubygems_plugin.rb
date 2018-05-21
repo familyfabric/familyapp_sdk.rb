@@ -1,5 +1,5 @@
 Gem.post_install do
-  Dir.pwd
+  p Dir.pwd
   # if File.exist?('yatta.txt')
   #   p 1
   #   f= File.open('yatta.txt', 'r')
