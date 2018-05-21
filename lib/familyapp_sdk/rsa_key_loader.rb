@@ -18,18 +18,18 @@ module FamilyappSdk
       end
       key
     end
-  end
 
-  private
+    private
 
-  def save_to_file(key, cipher = nil, password = nil)
-    begin
-      file = File.open(FamilyappSdk.config.rsa_key_path, 'w')
-      cipher && password ? file.write(key.to_pem(cipher, password)) : file.write(key.to_pem)
-    rescue IOError => e
-      raise e
-    ensure
-      file.close unless file.nil?
+    def save_to_file(key, cipher = nil, password = nil)
+      begin
+        file = File.open(FamilyappSdk.config.rsa_key_path, 'w')
+        cipher && password ? file.write(key.to_pem(cipher, password)) : file.write(key.to_pem)
+      rescue IOError => e
+        raise e
+      ensure
+        file.close unless file.nil?
+      end
     end
   end
 end
