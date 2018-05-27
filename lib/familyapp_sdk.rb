@@ -1,16 +1,18 @@
 require 'familyapp_sdk/version'
 require 'familyapp_sdk/configuration'
 require 'familyapp_sdk/rsa_key_loader'
+require 'familyapp_sdk/key_store'
 
 module FamilyappSdk
   class << self
-    attr_accessor :config, :rsa_key
+    attr_accessor :config, :rsa_key, :key_store
 
     def configure
       @config ||= Configuration.new
       yield(config)
       load_rsa_key
       update_remote_key
+      @key_store = KeyStore.new
     end
 
     def reset
