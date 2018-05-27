@@ -1,6 +1,6 @@
 module FamilyappSdk
   class Message
-    attr_accessor :content, :iv, :image, :video, :template, :quick_replies
+    attr_accessor :content, :iv, :key_version, :image, :video, :template, :quick_replies
 
     def initialize(content: nil, conversation_id: nil, image: nil, video: nil, template: nil, quick_replies: nil)
       prepare_content(content, conversation_id)
@@ -36,16 +36,18 @@ module FamilyappSdk
     private
 
     def prepare_content(msg, conversation_id)
-      key = KeyStore.instance.last_key_for(conversation_id)
-      if key
+      last_key = KeyStore.instance.last_key_for(conversation_id)
+      if last_key
         aes = OpenSSL::Cipher::AES256.new :CBC
         aes.encrypt
-        aes.key = key.unpack('m')[0]
+        aes.key = last_key[:key].unpack('m')[0]
         @iv = [aes.random_iv].pack('m')
         cipher = aes.update(msg) + aes.final
         @content = [cipher].pack('m')
+        @key_version = last_key[:version]
       else
         @iv = nil
+        @key_version = nil
         @content = msg
       end
     end

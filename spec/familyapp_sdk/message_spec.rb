@@ -18,7 +18,7 @@ RSpec.describe FamilyappSdk::Message do
     it 'encrypt message when key exists' do
       key_store = double()
       allow(FamilyappSdk::KeyStore).to receive(:instance).and_return key_store
-      allow(key_store).to receive(:last_key_for).with(1).and_return(key)
+      allow(key_store).to receive(:last_key_for).with(1).and_return(json[0])
       msg = FamilyappSdk::Message.new(content: 'Ram pam pam.', conversation_id: 1)
       expect(msg.content).to_not eq('Ram pam pam.')
       expect(msg.iv).to_not eq nil
