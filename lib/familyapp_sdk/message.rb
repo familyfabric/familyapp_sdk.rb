@@ -18,18 +18,18 @@ module FamilyappSdk
       quick_replies.map { |quick_reply| quick_reply.build } if quick_replies.present?
     end
 
-    def self.decrypt(message)
-      key = KeyStore.instance.key_for(message[:conversation_id], message[:key_version])
-      if key && message[:iv].present?
+    def self.decrypt(content, iv, conversation_id, key_version)
+      key = KeyStore.instance.key_for(conversation_id, key_version)
+      if key && iv.present?
         aes = OpenSSL::Cipher::AES256.new :CBC
         aes.decrypt
         aes.key = key.unpack('m')[0]
-        aes.iv = message[:iv].unpack('m')[0]
-        plain = aes.update(message[:content].unpack('m')[0])
+        aes.iv = iv.unpack('m')[0]
+        plain = aes.update(content.unpack('m')[0])
         plain << aes.final
         plain
       else
-        message[:content]
+        content
       end
     end
 

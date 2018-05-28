@@ -10,7 +10,7 @@ RSpec.describe FamilyappSdk::Message do
       key_store = double()
       allow(FamilyappSdk::KeyStore).to receive(:instance).and_return key_store
       allow(key_store).to receive(:key_for).with(1, 1).and_return(key)
-      expect(FamilyappSdk::Message.decrypt(message)).to eq('Ram pam pam.')
+      expect(FamilyappSdk::Message.decrypt(message[:content], message[:iv], 1, 1)).to eq('Ram pam pam.')
     end
   end
 
