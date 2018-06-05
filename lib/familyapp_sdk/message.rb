@@ -2,8 +2,8 @@ module FamilyappSdk
   class Message
     attr_accessor :content, :iv, :key_version, :image, :video, :template, :quick_replies
 
-    def initialize(content: nil, conversation_id: nil, image: nil, video: nil, template: nil, quick_replies: nil)
-      prepare_content(content, conversation_id)
+    def initialize(content: nil, family_id: nil, conversation_id: nil, image: nil, video: nil, template: nil, quick_replies: nil)
+      prepare_content(content, family_id, conversation_id)
       @image = image
       @video = video
       @template = template.build.to_json if template.present?
@@ -18,8 +18,8 @@ module FamilyappSdk
       quick_replies.map { |quick_reply| quick_reply.build } if quick_replies.present?
     end
 
-    def self.decrypt(content, iv, conversation_id, key_version)
-      key = KeyStore.instance.key_for(conversation_id, key_version)
+    def self.decrypt(content, iv, family_id, conversation_id, key_version)
+      key = KeyStore.instance.key_for(family_id, conversation_id, key_version)
       if key && iv.present?
         aes = OpenSSL::Cipher::AES256.new :CBC
         aes.decrypt
@@ -35,8 +35,8 @@ module FamilyappSdk
 
     private
 
-    def prepare_content(msg, conversation_id)
-      last_key = KeyStore.instance.last_key_for(conversation_id)
+    def prepare_content(msg, family_id, conversation_id)
+      last_key = KeyStore.instance.last_key_for(family_id, conversation_id)
       if last_key
         aes = OpenSSL::Cipher::AES256.new :CBC
         aes.encrypt

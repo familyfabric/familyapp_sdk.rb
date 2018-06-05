@@ -12,7 +12,7 @@ module FamilyappSdk
       yield(config)
       load_rsa_key
       update_remote_key
-      @key_store = KeyStore.new
+      @key_store = KeyStore.instance
     end
 
     def reset
