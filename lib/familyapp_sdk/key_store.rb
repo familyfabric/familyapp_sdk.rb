@@ -45,7 +45,7 @@ module FamilyappSdk
       JSON.parse(response.body, {:symbolize_names => true}).each do |row|
         if row[:version].present? && row[:key].present?
           unless @keys.dig(conversation_id, row[:version])
-            @keys[conversation_id][row[:version]] = { encrypted_key: row[:key], decrypted_key: nil }
+            @keys[conversation_id][row[:version]] = { encrypted_key: row[:key][:key], decrypted_key: nil }
           end
         end
       end
