@@ -19,7 +19,7 @@ module FamilyappSdk
     end
 
     def self.decrypt(content, iv, family_id, conversation_id, key_version)
-      key = KeyStore.instance.key_for(family_id, conversation_id, key_version)
+      key = ::FamilyappSdk::KeyStore.instance.key_for(family_id, conversation_id, key_version)
       if key && iv.present?
         aes = OpenSSL::Cipher::AES128.new :CBC
         aes.decrypt
@@ -36,7 +36,7 @@ module FamilyappSdk
     private
 
     def prepare_content(msg, family_id, conversation_id)
-      last_key = KeyStore.instance.last_key_for(family_id, conversation_id)
+      last_key = ::FamilyappSdk::KeyStore.instance.last_key_for(family_id, conversation_id)
       if last_key
         aes = OpenSSL::Cipher::AES128.new :CBC
         aes.encrypt
