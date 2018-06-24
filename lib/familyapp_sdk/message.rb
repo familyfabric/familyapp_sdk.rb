@@ -41,9 +41,9 @@ module FamilyappSdk
         aes = OpenSSL::Cipher::AES128.new :CBC
         aes.encrypt
         aes.key = last_key[:key].unpack('m')[0]
-        @iv = [aes.random_iv].pack('m')
+        @iv = [aes.random_iv].pack('m').gsub("\n", '')
         cipher = aes.update(msg) + aes.final
-        @content = [cipher].pack('m')
+        @content = [cipher].pack('m').gsub("\n", '')
         @key_version = last_key[:version]
       else
         @iv = nil
