@@ -1,5 +1,5 @@
-FROM ruby:2.4.1
-MAINTAINER lukasz.horonziak@stermedia.eu
+FROM ruby:2.4.5
+LABEL maintainer="marcin.kusiak@stermedia.eu"
 
 # Install necesary dependecies
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
