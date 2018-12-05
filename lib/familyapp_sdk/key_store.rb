@@ -16,8 +16,12 @@ module FamilyappSdk
       response = Client.get_conversation_key_versions(family_id, conversation_id)
       parse_response(conversation_id, response)
       max_version = @keys[conversation_id].keys.max
-      @keys[conversation_id][max_version][:decrypted_key] ||= decrypt(@keys[conversation_id][max_version][:encrypted_key])
-      { version: max_version, key: @keys[conversation_id][max_version][:decrypted_key] }
+      if max_version
+        @keys[conversation_id][max_version][:decrypted_key] ||= decrypt(@keys[conversation_id][max_version][:encrypted_key])
+        { version: max_version, key: @keys[conversation_id][max_version][:decrypted_key] }
+      else
+        nil
+      end
     end
 
     def key_for(family_id, conversation_id, key_version)
