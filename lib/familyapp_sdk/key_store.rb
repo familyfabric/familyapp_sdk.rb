@@ -14,20 +14,20 @@ module FamilyappSdk
 
     def last_key_for(family_id, conversation_id)
       response = Client.get_conversation_key_versions(family_id, conversation_id)
-      parse_response(conversation_id, response)
-      max_version = @keys[conversation_id].keys.max
-      if max_version
+      parse_response(conversation_id, response) if response.code == 200
+      max_version = @keys[conversation_id].keys.max if @keys[conversation_id]
+      if max_version && @keys.dig(conversation_id, max_version)
         @keys[conversation_id][max_version][:decrypted_key] ||= decrypt(@keys[conversation_id][max_version][:encrypted_key])
-        { version: max_version, key: @keys[conversation_id][max_version][:decrypted_key] }
-      else
-        nil
+        return { version: max_version, key: @keys[conversation_id][max_version][:decrypted_key] }
       end
+
+      nil
     end
 
     def key_for(family_id, conversation_id, key_version)
       unless @keys.dig(conversation_id, key_version)
         response = Client.get_conversation_key_versions(family_id, conversation_id)
-        parse_response(conversation_id, response)
+        parse_response(conversation_id, response) if response.code == 200
       end
 
       if @keys.dig(conversation_id, key_version)
@@ -42,12 +42,10 @@ module FamilyappSdk
 
     def parse_response(conversation_id, response)
       @keys[conversation_id] ||= {}
-      response = JSON.parse(response)
-      response.each do |key|
-        key = key.symbolize_keys if key.is_a? Hash
-        if key[:version].present? && key[:key].present?
-          unless @keys.dig(conversation_id, key[:version])
-            @keys[conversation_id][key[:version]] = { encrypted_key: key[:key], decrypted_key: nil }
+      JSON.parse(response.body, {:symbolize_names => true}).each do |row|
+        if row[:version].present? && row[:key].present?
+          unless @keys.dig(conversation_id, row[:version])
+            @keys[conversation_id][row[:version]] = { encrypted_key: row[:key][:key], decrypted_key: nil }
           end
         end
       end
