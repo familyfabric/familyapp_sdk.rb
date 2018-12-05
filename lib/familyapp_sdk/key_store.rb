@@ -44,7 +44,7 @@ module FamilyappSdk
       @keys[conversation_id] ||= {}
       response = JSON.parse(response)
       response.each do |key|
-        key = key.symbolize_keys
+        key = key.symbolize_keys if key.is_a? Hash
         if key[:version].present? && key[:key].present?
           unless @keys.dig(conversation_id, key[:version])
             @keys[conversation_id][key[:version]] = { encrypted_key: key[:key], decrypted_key: nil }
