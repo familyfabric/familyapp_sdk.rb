@@ -38,10 +38,12 @@ module FamilyappSdk
 
     def parse_response(conversation_id, response)
       @keys[conversation_id] ||= {}
-      response.each do |row|
-        if row[:version].present? && row[:key].present?
-          unless @keys.dig(conversation_id, row[:version])
-            @keys[conversation_id][row[:version]] = { encrypted_key: row[:key], decrypted_key: nil }
+      response = JSON.parse(response)
+      response.each do |key|
+        key = key.symbolize_keys
+        if key[:version].present? && key[:key].present?
+          unless @keys.dig(conversation_id, key[:version])
+            @keys[conversation_id][key[:version]] = { encrypted_key: key[:key], decrypted_key: nil }
           end
         end
       end
